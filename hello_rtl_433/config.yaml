@@ -20,4 +20,4 @@ schema:
     command_line: str
     
 map:
-	config
+    - config
