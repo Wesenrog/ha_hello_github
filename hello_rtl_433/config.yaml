@@ -1,6 +1,6 @@
 name: "Hello rtl_433"
 description: "First rtl_433 test"
-version: "0.0.2"
+version: "0.0.3"
 slug: "hello_rtl_433" 
 init: false
 arch:
@@ -14,5 +14,7 @@ usb: true
 udev: true
     
     
-  
- 
+options:
+    command_line: "-v"
+schema:
+    command_line: str
