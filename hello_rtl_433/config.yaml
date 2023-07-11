@@ -1,6 +1,6 @@
 name: "Hello rtl_433"
 description: "First rtl_433 test"
-version: "0.0.3"
+version: "0.0.4"
 slug: "hello_rtl_433" 
 init: false
 arch:
