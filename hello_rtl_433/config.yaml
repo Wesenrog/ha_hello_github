@@ -1,0 +1,26 @@
+name: "Hello rtl_433"
+description: "First rtl_433 test"
+version: "0.0.1"
+slug: "hello_rtl_433" 
+init: false
+arch:
+  - aarch64
+  - amd64
+  - armhf
+  - armv7
+  - i386
+startup: application
+usb: true
+udev: true
+options:
+    command_line: ""
+
+schema:
+    command_line: str?
+    
+map:
+    config
+    
+    
+  
+ 
