@@ -42,7 +42,7 @@ COPY --from=builder /build/root/ /
 
 COPY run.sh /
 
-RUN Chmod a+x /run.sh
+RUN chmod a+x /run.sh
 
 CMD [ "/run.sh" ]
 
