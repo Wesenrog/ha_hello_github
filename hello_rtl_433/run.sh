@@ -1,6 +1,6 @@
 #!/usr/bin/with-contenv bashio
 
-cmd_line = $(bashio::config "command_line")
+cmd_line=$(bashio::config "command_line")
 
 echo "Got command line: " $cmd_line
 
