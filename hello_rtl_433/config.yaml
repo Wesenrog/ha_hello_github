@@ -1,6 +1,6 @@
 name: "Hello rtl_433"
 description: "First rtl_433 test"
-version: "0.0.4"
+version: "0.0.5"
 slug: "hello_rtl_433" 
 init: false
 arch:
@@ -18,3 +18,6 @@ options:
     command_line: "-v"
 schema:
     command_line: str
+    
+map:
+	config
