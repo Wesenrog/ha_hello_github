@@ -12,14 +12,6 @@ arch:
 startup: application
 usb: true
 udev: true
-options:
-    command_line: ""
-
-schema:
-    command_line: str?
-    
-map:
-    config
     
     
   
