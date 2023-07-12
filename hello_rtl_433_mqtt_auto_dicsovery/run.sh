@@ -10,4 +10,4 @@ ls ./
 echo "/"
 ls /
 
-python3  -u /rtl_422_mqtt_hass.py $cmd_line
+python3  -u /rtl_433_mqtt_hass.py $cmd_line
