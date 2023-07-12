@@ -1,7 +1,7 @@
 name: "Hello rtl_433 ad"
 description: "First rtl_433 ad"
 version: "0.0.1"
-slug: "hello_rtl_433 ad" 
+slug: "hello_rtl_433_ad" 
 init: false
 arch:
   - aarch64
