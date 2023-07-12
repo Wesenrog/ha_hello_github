@@ -845,7 +845,12 @@ def rtl_433_bridge():
 
 
 def run():
+    force_ids = []
+    for x in args.force_ids:
+        force_ids += x.split() 
+    args.force_ids = force_ids    
     logging.info(args.force_ids)
+        
     """Run main or daemon."""
     # with daemon.DaemonContext(files_preserve=[sock]):
     #  detach_process=True

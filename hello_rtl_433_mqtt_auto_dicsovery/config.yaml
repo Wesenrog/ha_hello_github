@@ -1,7 +1,7 @@
-name: "Hello rtl_433"
-description: "First rtl_433 test"
-version: "0.0.5"
-slug: "hello_rtl_433" 
+name: "Hello rtl_433 ad"
+description: "First rtl_433 ad"
+version: "0.0.1"
+slug: "hello_rtl_433 ad" 
 init: false
 arch:
   - aarch64
@@ -10,15 +10,13 @@ arch:
   - armv7
   - i386
 startup: application
-usb: true
-udev: true
+
     
     
 options:
     command_line: "-d"
-    forced_ids : 
+    forced_ids : ""
 schema:
     command_line: str
-    forced_ids: list?
-map:
-    - config
+    forced_ids: str?
+
