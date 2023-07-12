@@ -768,7 +768,7 @@ def publish_config(mqttc, topic, model, object_id, mapping, value=None):
     logging.debug(path + ":" + json.dumps(config))
     logging.info("To publish: " + path + ":" + json.dumps(config))
 
-    #mqttc.publish(path, json.dumps(config), retain=args.retain)
+    mqttc.publish(path, json.dumps(config), retain=args.retain)
     return True
 
 def bridge_event_to_hass(mqttc, topicprefix, data):
