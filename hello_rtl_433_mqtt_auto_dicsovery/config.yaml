@@ -15,9 +15,10 @@ udev: true
     
     
 options:
-    command_line: "-v"
+    command_line: "-d"
+    forced_ids : 
 schema:
     command_line: str
-    
+    forced_ids: list?
 map:
     - config

@@ -705,7 +705,7 @@ def rtl_433_device_info(data):
     path_elements = []
     id_elements = []
     last_match_end = 0
-    # The default for args.device_topic_suffix is the same topic structure
+    # The default for args.device_topic_suffix is# the same topic structure
     # as set by default in rtl433 config
     for match in re.finditer(TOPIC_PARSE_RE, args.device_topic_suffix):
         path_elements.append(args.device_topic_suffix[last_match_end:match.start()])
@@ -759,16 +759,16 @@ def publish_config(mqttc, topic, model, object_id, mapping, value=None):
         config["name"] = object_name
     config["device"] = { "identifiers": [object_id], "name": object_id, "model": model, "manufacturer": "rtl_433" }
 
-    if args.force_update:
+    if args.force_update or object_name in args.force_ids:
         config["force_update"] = "true"
 
     if args.expire_after:
         config["expire_after"] = args.expire_after
 
     logging.debug(path + ":" + json.dumps(config))
+    logging.info("To publish: " + path + ":" + json.dumps(config))
 
-    mqttc.publish(path, json.dumps(config), retain=args.retain)
-
+    #mqttc.publish(path, json.dumps(config), retain=args.retain)
     return True
 
 def bridge_event_to_hass(mqttc, topicprefix, data):
@@ -845,6 +845,7 @@ def rtl_433_bridge():
 
 
 def run():
+    logging.info(args.force_ids)
     """Run main or daemon."""
     # with daemon.DaemonContext(files_preserve=[sock]):
     #  detach_process=True
@@ -873,6 +874,8 @@ if __name__ == "__main__":
     parser.add_argument("-r", "--retain", action="store_true")
     parser.add_argument("-f", "--force_update", action="store_true",
                         help="Append 'force_update = true' to all configs.")
+    parser.add_argument("-F", "--force_selective", type=str, action="append", dest="force_ids",
+                        help="Append 'force_update = true' to config for specified dentifier")
     parser.add_argument("-R", "--rtl-topic", type=str,
                         default="rtl_433/+/events",
                         dest="rtl_topic",
@@ -923,4 +926,5 @@ if __name__ == "__main__":
     else:
         logging.info("Discovering all devices")
 
+    logging.info ("GO Go Go!")
     run()
