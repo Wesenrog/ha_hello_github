@@ -1,6 +1,6 @@
 name: "Hello rtl_433 ad"
 description: "First rtl_433 ad"
-version: "0.0.2"
+version: "0.0.3"
 slug: "hello_rtl_433_ad" 
 init: false
 arch:
