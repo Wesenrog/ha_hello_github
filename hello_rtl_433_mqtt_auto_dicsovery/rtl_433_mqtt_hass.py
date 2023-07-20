@@ -759,7 +759,7 @@ def publish_config(mqttc, topic, model, object_id, mapping, value=None):
         config["name"] = object_name
     config["device"] = { "identifiers": [object_id], "name": object_id, "model": model, "manufacturer": "rtl_433" }
 
-    if args.force_update or object_name in args.force_ids:
+    if args.force_update or (object_name in args.force_ids):
         config["force_update"] = "true"
 
     if args.expire_after:
@@ -845,11 +845,12 @@ def rtl_433_bridge():
 
 
 def run():
+    logging.info("Force ids: " + str(args.force_ids))
     force_ids = []
     for x in args.force_ids:
         force_ids += x.split() 
     args.force_ids = force_ids    
-    logging.info(args.force_ids)
+    logging.info("Force ids after: " + str(args.force_ids))
         
     """Run main or daemon."""
     # with daemon.DaemonContext(files_preserve=[sock]):
@@ -879,7 +880,7 @@ if __name__ == "__main__":
     parser.add_argument("-r", "--retain", action="store_true")
     parser.add_argument("-f", "--force_update", action="store_true",
                         help="Append 'force_update = true' to all configs.")
-    parser.add_argument("-F", "--force_selective", type=str, action="append", dest="force_ids",
+    parser.add_argument("-F", "--force_selective", type=str, action="append", dest="force_ids", default=[],
                         help="Append 'force_update = true' to config for specified dentifier")
     parser.add_argument("-R", "--rtl-topic", type=str,
                         default="rtl_433/+/events",
