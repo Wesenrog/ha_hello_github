@@ -201,6 +201,28 @@ mappings = {
             "state_class": "measurement"
         }
     },
+    "humidity_1": {
+        "device_type": "sensor",
+        "object_suffix": "H1",
+        "config": {
+            "device_class": "humidity",
+            "name": "Humidity 1",
+            "unit_of_measurement": "%",
+            "value_template": "{{ value|float }}",
+            "state_class": "measurement"
+        }
+    },
+    "humidity_2": {
+        "device_type": "sensor",
+        "object_suffix": "H2",
+        "config": {
+            "device_class": "humidity",
+            "name": "Humidity 2",
+            "unit_of_measurement": "%",
+            "value_template": "{{ value|float }}",
+            "state_class": "measurement"
+        }
+    },
 
     "moisture": {
         "device_type": "sensor",
@@ -359,7 +381,7 @@ mappings = {
         }
     },
 
-    "rain_mm_h": {
+    "rain_rate_mm_h": {
         "device_type": "sensor",
         "object_suffix": "RR",
         "config": {
@@ -705,7 +727,7 @@ def rtl_433_device_info(data):
     path_elements = []
     id_elements = []
     last_match_end = 0
-    # The default for args.device_topic_suffix is# the same topic structure
+    # The default for args.device_topic_suffix is the same topic structure
     # as set by default in rtl433 config
     for match in re.finditer(TOPIC_PARSE_RE, args.device_topic_suffix):
         path_elements.append(args.device_topic_suffix[last_match_end:match.start()])
@@ -766,9 +788,9 @@ def publish_config(mqttc, topic, model, object_id, mapping, value=None):
         config["expire_after"] = args.expire_after
 
     logging.debug(path + ":" + json.dumps(config))
-    logging.info("To publish: " + path + ":" + json.dumps(config))
 
     mqttc.publish(path, json.dumps(config), retain=args.retain)
+
     return True
 
 def bridge_event_to_hass(mqttc, topicprefix, data):
@@ -799,7 +821,7 @@ def bridge_event_to_hass(mqttc, topicprefix, data):
     for key in data.keys():
         if key in mappings:
             # topic = "/".join([topicprefix,"devices",model,instance,key])
-            topic = "/".join([base_topic, key])
+            topic = "/".join([topicprefix,base_topic, key])
             if publish_config(mqttc, topic, model, device_id, mappings[key]):
                 published_keys.append(key)
         else:
@@ -845,13 +867,11 @@ def rtl_433_bridge():
 
 
 def run():
-    logging.info("Force ids: " + str(args.force_ids))
     force_ids = []
     for x in args.force_ids:
-        force_ids += x.split() 
-    args.force_ids = force_ids    
-    logging.info("Force ids after: " + str(args.force_ids))
-        
+        force_ids += x.split()
+    args.force_ids=force_ids
+    
     """Run main or daemon."""
     # with daemon.DaemonContext(files_preserve=[sock]):
     #  detach_process=True
@@ -862,6 +882,7 @@ def run():
 
 
 if __name__ == "__main__":
+    logging.basicConfig(format='[%(asctime)s] %(levelname)s:%(name)s:%(message)s',datefmt='%Y-%m-%dT%H:%M:%S%z')
     logging.getLogger().setLevel(logging.INFO)
 
     parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -881,7 +902,7 @@ if __name__ == "__main__":
     parser.add_argument("-f", "--force_update", action="store_true",
                         help="Append 'force_update = true' to all configs.")
     parser.add_argument("-F", "--force_selective", type=str, action="append", dest="force_ids", default=[],
-                        help="Append 'force_update = true' to config for specified dentifier")
+                        help="Append 'force_update = true' to config for specified identifier")
     parser.add_argument("-R", "--rtl-topic", type=str,
                         default="rtl_433/+/events",
                         dest="rtl_topic",
@@ -932,5 +953,4 @@ if __name__ == "__main__":
     else:
         logging.info("Discovering all devices")
 
-    logging.info ("GO Go Go!")
     run()
